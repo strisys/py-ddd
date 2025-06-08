@@ -1,0 +1,9 @@
+build
+openpyxl
+pydantic
+pandas
+pytest
+python-dotenv
+setuptools
+tabulate
+../model/dist/model-0.1.0-py3-none-any.whl

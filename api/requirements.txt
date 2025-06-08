@@ -1,0 +1,9 @@
+build
+openpyxl
+pydantic
+pandas
+pytest
+python-dotenv
+setuptools
+tabulate
+../services/dist/services-0.1.0-py3-none-any.whl
