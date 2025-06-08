@@ -1,52 +1,70 @@
 {
   "version": "0.2.0",
   "configurations": [
-    {
-      "name": "Python: Current File",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "${file}",
-      "console": "integratedTerminal",
-      "justMyCode": true
-    },
-    {
-      "name": "Python: Main",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "${workspaceFolder}/main.py",
-      "console": "integratedTerminal",
-      "justMyCode": true
-    },
-   {
-      "name": "Python: All Tests",
-      "type": "debugpy",
-      "request": "launch",
-      "module": "pytest",
-      "args": [
-         "./model/tests",
-         "./services/tests",
-         "-v"
-      ],
-      "cwd": "${workspaceFolder}",
-      "env": {
-         "PYTHONPATH": "${workspaceFolder}/model/src:${workspaceFolder}/services/src"
+      {
+         "name": "FastAPI",
+         "type": "debugpy",
+         "request": "launch",
+         "module": "uvicorn",
+         "args": [
+               "api.app:app",
+               "--reload",
+               "--port",
+               "8080"
+         ],
+         "jinja": true,
+         "justMyCode": true,
+         "env": {
+               "PYTHONPATH": "${workspaceFolder}/api/src"
+         },
+         "cwd": "${workspaceFolder}"
       },
-      "console": "integratedTerminal"
-   },
-   {
-      "name": "Python: Tests in Current File",
-      "type": "debugpy",
-      "request": "launch",
-      "module": "pytest",
-      "args": [
-         "${file}",
-         "-v"
-      ],
-      "cwd": "${workspaceFolder}/model",
-      "env": {
-         "PYTHONPATH": "${workspaceFolder}/model/src"
+      {
+         "name": "Python: Current File",
+         "type": "debugpy",
+         "request": "launch",
+         "program": "${file}",
+         "console": "integratedTerminal",
+         "justMyCode": true
       },
-      "console": "integratedTerminal"
-   }
+      {
+         "name": "Python: Main",
+         "type": "debugpy",
+         "request": "launch",
+         "program": "${workspaceFolder}/main.py",
+         "console": "integratedTerminal",
+         "justMyCode": true
+      },
+      {
+         "name": "Python: All Tests",
+         "type": "debugpy",
+         "request": "launch",
+         "module": "pytest",
+         "args": [
+            "./model/tests",
+            "./services/tests",
+            "-v"
+         ],
+         "cwd": "${workspaceFolder}",
+         "env": {
+            "PYTHONPATH": "${workspaceFolder}/model/src:${workspaceFolder}/services/src"
+         },
+         "console": "integratedTerminal"
+      },
+      {
+         "name": "Python: Tests in Current File",
+         "type": "debugpy",
+         "request": "launch",
+         "module": "pytest",
+         "args": [
+            "${file}",
+            "-v"
+         ],
+         "cwd": "${workspaceFolder}/model",
+         "env": {
+            "PYTHONPATH": "${workspaceFolder}/model/src"
+         },
+         "console": "integratedTerminal"
+      }
   ]
 }
