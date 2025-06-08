@@ -1,4 +1,4 @@
-# Py DDD Monorepo
+# Python DDD Monorepo
 
 
 
