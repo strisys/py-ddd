@@ -1,3 +1,5 @@
 fastapi
 uvicorn
 python-multipart
+../model/dist/model-0.1.0-py3-none-any.whl
+

@@ -37,8 +37,8 @@ COPY model/tests/ ./tests/
 RUN pip install --no-cache-dir --upgrade pip \
    && pip install build 
 
-RUN pip install --no-cache-dir -r requirements.txt \
-   && python -m build 
+RUN pip install --no-cache-dir -r requirements.txt
+RUN python -m build 
 
 # Set up and install services
 WORKDIR /workspace/services
@@ -49,8 +49,8 @@ COPY services/pyproject.toml ./pyproject.toml
 COPY services/src/ ./src/
 COPY services/tests/ ./tests/
 
-RUN pip install --no-cache-dir -r requirements.txt \
-   && python -m build 
+RUN pip install --no-cache-dir -r requirements.txt
+RUN python -m build 
 
 # Set up and install api
 WORKDIR /workspace/api
