@@ -17,7 +17,6 @@
             "ms-toolsai.jupyter",
             "ms-toolsai.datawrangler",
             "ms-python.black-formatter",
-            "ms-python.isort",
             "ms-azuretools.vscode-containers",
             "njpwerner.autodocstring",
             "streetsidesoftware.code-spell-checker",
@@ -63,11 +62,6 @@
                   "source.organizeImports": "explicit"
                }
             },
-            "isort.args": [
-               "--profile",
-               "black",
-               "--line-length=150"
-            ],
             "terminal.integrated.defaultProfile.linux": "bash",
             "terminal.integrated.profiles.linux": {
                "pwsh": {

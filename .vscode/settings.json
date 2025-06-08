@@ -7,7 +7,7 @@
     "**/ReadMe.md": true,
     "**/**/setup.py": true,
     "**/*.egg-info/": false,
-    "**/.devcontainer": true,
+    "**/.devcontainer": false,
     "**/Dockerfile": false,
     "**/requirements.txt": false,
     "**/.vscode/launch.json": false,
