@@ -64,7 +64,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy shared validation script and run validation
 COPY scripts/ /workspace/scripts/
-# RUN pip install pipdeptree \
+
+RUN pip install pipdeptree \
+   && python /workspace/scripts/run_all_tests.py
+
 #    && python /workspace/scripts/validate_imports.py model/src model/requirements.txt \
 #    && python /workspace/scripts/validate_imports.py services/src services/requirements.txt \
 #    && pytest $(find . -type d -name tests) --maxfail=1 --tb=short

@@ -46,7 +46,7 @@
          "justMyCode": true
       },
       {
-         "name": "Python: All Tests",
+         "name": "Pytest: All Tests",
          "type": "debugpy",
          "request": "launch",
          "module": "pytest",
@@ -62,7 +62,7 @@
          "console": "integratedTerminal"
       },
       {
-         "name": "Python: Tests in Current File",
+         "name": "Pytest: Current File",
          "type": "debugpy",
          "request": "launch",
          "module": "pytest",
