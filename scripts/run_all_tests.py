@@ -46,7 +46,6 @@ def run_all_tests():
             check=False  # Don't raise exception on non-zero exit
         )
         
-        # Return the exit code
         return result.returncode
         
     except FileNotFoundError:
