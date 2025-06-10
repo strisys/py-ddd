@@ -77,17 +77,10 @@ RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
    python /app/scripts/run_all_tests.py; \
    fi
 
-# Set final working directory and environment
 WORKDIR /app
+ENV PYTHONPATH=/app/api/src:/app/services/src:/app/model/src
 
-RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
-    echo "Setting production PYTHONPATH"; \
-    echo "export PYTHONPATH=/app/api/src:/app/services/src:/app/model/src" >> /etc/profile.d/pythonpath.sh; \
-fi
-
-# Switch to non-root user
 USER $USERNAME
 
-# Expose port and set startup command
 EXPOSE 8080
 CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8080"]
