@@ -8,6 +8,3 @@ class CustomerDataAccessService:
          Customer("Elon Musk", "elon.musk@x.com"),
          Customer("Bill Gates", "billgates@microsoft.com")
       ]
-
-   async def get_all(self) -> list[Customer]:
-      return await self.get()

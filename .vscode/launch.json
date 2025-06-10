@@ -57,11 +57,11 @@
             "./services/tests",
             "-v"
          ],
+         "console": "integratedTerminal",
          "cwd": "${workspaceFolder}",
          "env": {
-            "PYTHONPATH": "${workspaceFolder}/model/src:${workspaceFolder}/services/src"
-         },
-         "console": "integratedTerminal"
+            "PYTHONPATH": "${workspaceFolder}/api/src:${workspaceFolder}/services/src:${workspaceFolder}/model/src"
+         }
       },
       {
          "name": "Pytest: Current File",
@@ -72,11 +72,11 @@
             "${file}",
             "-v"
          ],
-         "cwd": "${workspaceFolder}/model",
+         "console": "integratedTerminal",
+         "cwd": "${workspaceFolder}",
          "env": {
-            "PYTHONPATH": "${workspaceFolder}/model/src"
-         },
-         "console": "integratedTerminal"
+            "PYTHONPATH": "${workspaceFolder}/api/src:${workspaceFolder}/services/src:${workspaceFolder}/model/src"
+         }
       }
   ]
 }
