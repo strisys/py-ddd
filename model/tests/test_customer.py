@@ -1,6 +1,6 @@
 import pytest
 from pydantic import ValidationError
-from src.model.customer import Customer, CustomerData
+from model import Customer, CustomerData
 
 
 class TestCustomerDataValidation:

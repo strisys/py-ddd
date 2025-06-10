@@ -1,12 +1,8 @@
 from fastapi import FastAPI
-from services import CustomerDataAccessService, ProductDataAccessService
+from services import CustomerDataAccessService
 
 app = FastAPI()
 
-@app.get("/customers")
+@app.get("/customers", response_model=list[str])
 def get_customers() -> list[str]:
-    return [c.name for c in CustomerDataAccessService().get()]
-
-@app.get("/products")
-def get_products() -> list[str]:
-    return [c.name for c in ProductDataAccessService().get()]
+    return [c.to_json() for c in CustomerDataAccessService().get()]
