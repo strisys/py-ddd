@@ -20,6 +20,16 @@
          "cwd": "${workspaceFolder}"
       },
       {
+         "name": "Docker: FastAPI",
+         "type": "node",
+         "request": "launch",
+         "program": "${workspaceFolder}/scripts/docker-run.ps1",
+         "console": "integratedTerminal",
+         "cwd": "${workspaceFolder}",
+         "runtimeExecutable": "pwsh",
+         "runtimeArgs": ["-File"]
+      },
+      {
          "name": "Python: Current File",
          "type": "debugpy",
          "request": "launch",

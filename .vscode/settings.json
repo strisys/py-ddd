@@ -3,7 +3,7 @@
     "**/.pytest_cache": true,
     "**/pyproject.toml": true,
     "**/.gitignore": true,
-    "**/scripts": true,
+    "**/scripts": false,
     "**/ReadMe.md": true,
     "**/**/setup.py": true,
     "**/*.egg-info/": true,

@@ -71,3 +71,10 @@ COPY scripts/ /workspace/scripts/
 
 # Switch to non-root user
 USER $USERNAME
+
+
+# Run the API server
+WORKDIR /workspace
+ENV PYTHONPATH="/workspace/api/src:/workspace/services/src:/workspace/model/src"
+EXPOSE 8080
+CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8080"]

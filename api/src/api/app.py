@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from services import CustomerDataAccessService
+from .router import configure_routes
 
-app = FastAPI()
+app = configure_routes(FastAPI(title="My API", version="1.0.0"))
 
-@app.get("/customers", response_model=list[str])
-def get_customers() -> list[str]:
-    return [c.to_json() for c in CustomerDataAccessService().get()]
+@app.get("/")
+def root():
+    return {"message": "Welcome to My API"}
