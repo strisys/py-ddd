@@ -1,5 +1,8 @@
 build
 pydantic
+pydantic[dotenv]
+pydantic[typing_extensions]
+pydantic[email]
 pytest
 python-dotenv
 setuptools

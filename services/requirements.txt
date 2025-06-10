@@ -1,9 +1,14 @@
+# Core
 build
-openpyxl
-pydantic
-pandas
 pytest
 python-dotenv
 setuptools
 tabulate
+
+# Data
+openpyxl
+pydantic
+pandas
+
+# Project-specific
 ../model/dist/model-0.1.0-py3-none-any.whl

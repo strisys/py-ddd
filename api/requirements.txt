@@ -1,5 +1,14 @@
+# Core
+pydantic
+pandas
+pytest
+python-dotenv
+setuptools
+
+# Project-specific
+../model/dist/model-0.1.0-py3-none-any.whl
+
+# Fast API
 fastapi
 uvicorn
 python-multipart
-../model/dist/model-0.1.0-py3-none-any.whl
-

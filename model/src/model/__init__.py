@@ -1,2 +1,3 @@
-from .customer import Customer
-from .product import Product
+from .customer import *
+from .product import *
+from .entity import *
