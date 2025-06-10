@@ -3,3 +3,7 @@ testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "-ra -q"
 asyncio_mode = "auto"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"

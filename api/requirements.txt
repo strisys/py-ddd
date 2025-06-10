@@ -6,8 +6,11 @@ python-dotenv
 setuptools
 
 # Project-specific
-../model/dist/model-0.1.0-py3-none-any.whl
-../services/dist/services-0.1.0-py3-none-any.whl
+# ../model/dist/model-0.1.0-py3-none-any.whl
+# ../services/dist/services-0.1.0-py3-none-any.whl
+
+-e ../model
+-e ../services
 
 # Fast API
 fastapi

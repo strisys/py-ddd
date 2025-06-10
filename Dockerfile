@@ -19,16 +19,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
-
 ARG BUILD_CONTEXT=remote
+ENV BUILD_CONTEXT=${BUILD_CONTEXT}
 
 RUN groupadd --gid $USER_GID $USERNAME \
    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
    && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
    && chmod 0440 /etc/sudoers.d/$USERNAME
 
-# Set working directory to model and install dependencies
-WORKDIR /workspace/model
+# Upgrade pip once at the beginning
+RUN pip install --no-cache-dir --upgrade pip build pipdeptree
+
+# Set up and install model
+WORKDIR /app/model
 
 COPY model/requirements.txt ./requirements.txt
 COPY model/setup.py ./setup.py
@@ -36,14 +39,14 @@ COPY model/pyproject.toml ./pyproject.toml
 COPY model/src/ ./src/
 COPY model/tests/ ./tests/
 
-RUN pip install --no-cache-dir --upgrade pip \
-   && pip install build 
-
 RUN pip install --no-cache-dir -r requirements.txt
-RUN python -m build 
+
+RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
+   python -m build; \
+   fi
 
 # Set up and install services
-WORKDIR /workspace/services
+WORKDIR /app/services
 
 COPY services/requirements.txt ./requirements.txt
 COPY services/setup.py ./setup.py
@@ -52,39 +55,39 @@ COPY services/src/ ./src/
 COPY services/tests/ ./tests/
 
 RUN pip install --no-cache-dir -r requirements.txt
-RUN python -m build 
+
+RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
+   python -m build; \
+   fi
 
 # Set up and install api
-WORKDIR /workspace/api
+WORKDIR /app/api
 
 COPY api/requirements.txt ./requirements.txt
 COPY api/setup.py ./setup.py
 COPY api/pyproject.toml ./pyproject.toml
 COPY api/src/ ./src/
 
-RUN pip install --no-cache-dir -r requirements.txt 
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy shared validation script and run validation
-COPY scripts/ /workspace/scripts/
+COPY scripts/ /app/scripts/
 
 RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
-   pip install pipdeptree && \
-   python /workspace/scripts/run_all_tests.py; \
+   python /app/scripts/run_all_tests.py; \
    fi
-
-# RUN pip install pipdeptree \
-#    && python /workspace/scripts/run_all_tests.py
-
-#    && python /workspace/scripts/validate_imports.py model/src model/requirements.txt \
-#    && python /workspace/scripts/validate_imports.py services/src services/requirements.txt \
-#    && pytest $(find . -type d -name tests) --maxfail=1 --tb=short
 
 # Switch to non-root user
 USER $USERNAME
 
+# Set final working directory and environment
+WORKDIR /app
 
-# Run the API server
-WORKDIR /workspace
-ENV PYTHONPATH="/workspace/api/src:/workspace/services/src:/workspace/model/src"
+RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
+    echo "Setting production PYTHONPATH"; \
+    echo "export PYTHONPATH=/app/api/src:/app/services/src:/app/model/src" >> /etc/profile.d/pythonpath.sh; \
+fi
+
+# Expose port and set startup command
 EXPOSE 8080
 CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8080"]

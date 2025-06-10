@@ -90,5 +90,6 @@
    },
    "forwardPorts": [],
    "remoteUser": "vscode",
-   "postCreateCommand": "pwsh .devcontainer/postCreateCommand.ps1"
+   "postCreateCommand": "pwsh .devcontainer/postCreateCommand.ps1",
+   "workspaceFolder": "/workspaces/py-ddd"
 }

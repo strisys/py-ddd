@@ -1,6 +1,8 @@
 from services import CustomerDataAccessService
 
+service = CustomerDataAccessService()
 
 class CustomerController:
-   def get(self) -> list[str]:
-        return [c.to_json() for c in await CustomerDataAccessService().get()]
+   async def get(self) -> list[str]:
+        values = await service.get_all()
+        return [c.to_json() for c in values]

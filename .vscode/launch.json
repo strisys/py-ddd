@@ -7,17 +7,19 @@
          "request": "launch",
          "module": "uvicorn",
          "args": [
-               "api.app:app",
-               "--reload",
-               "--port",
-               "8080"
+            "api.app:app",
+            "--reload",
+            "--reload-dir", "./api",
+            "--reload-dir", "./services",
+            "--reload-dir", "./model",
+            "--port", "8080"
          ],
          "jinja": true,
          "justMyCode": true,
+         "cwd": "${workspaceFolder}",
          "env": {
-               "PYTHONPATH": "${workspaceFolder}/api/src"
-         },
-         "cwd": "${workspaceFolder}"
+            "PYTHONPATH": "${workspaceFolder}/api/src:${workspaceFolder}/services/src:${workspaceFolder}/model/src"
+         }
       },
       {
          "name": "Docker: FastAPI",
