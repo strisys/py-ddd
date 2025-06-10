@@ -1,15 +1,15 @@
 {
   "files.exclude": {
     "**/.pytest_cache": true,
-    "**/pyproject.toml": true,
+    "**/pyproject.toml": false,
     "**/.gitignore": true,
     "**/scripts": false,
     "**/ReadMe.md": true,
     "**/**/setup.py": true,
     "**/*.egg-info/": true,
     "**/.devcontainer": false,
-    "**/Dockerfile": true,
-    "**/requirements.txt": true,
+    "**/Dockerfile": false,
+    "**/requirements.txt": false,
     "**/.vscode/launch.json": true,
     "**/**/__init__.py": true,
   },

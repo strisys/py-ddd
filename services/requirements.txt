@@ -1,6 +1,7 @@
 # Core
 build
 pytest
+pytest-asyncio
 python-dotenv
 setuptools
 tabulate

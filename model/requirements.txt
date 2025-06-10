@@ -4,6 +4,7 @@ pydantic[dotenv]
 pydantic[typing_extensions]
 pydantic[email]
 pytest
+pytest-asyncio
 python-dotenv
 setuptools
 tabulate

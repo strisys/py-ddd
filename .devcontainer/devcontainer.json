@@ -2,7 +2,10 @@
    "name": "Python Development",
    "build": {
       "dockerfile": "../Dockerfile",
-      "context": ".."
+      "context": "..",
+      "args": {
+         "BUILD_CONTEXT": "local"
+      }
    },
    "features": {
       "ghcr.io/devcontainers/features/powershell:1": {},

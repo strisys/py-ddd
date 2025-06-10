@@ -20,6 +20,8 @@ ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
+ARG BUILD_CONTEXT=remote
+
 RUN groupadd --gid $USER_GID $USERNAME \
    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
    && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
@@ -65,8 +67,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy shared validation script and run validation
 COPY scripts/ /workspace/scripts/
 
-RUN pip install pipdeptree \
-   && python /workspace/scripts/run_all_tests.py
+RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
+   pip install pipdeptree && \
+   python /workspace/scripts/run_all_tests.py; \
+   fi
+
+# RUN pip install pipdeptree \
+#    && python /workspace/scripts/run_all_tests.py
 
 #    && python /workspace/scripts/validate_imports.py model/src model/requirements.txt \
 #    && python /workspace/scripts/validate_imports.py services/src services/requirements.txt \
