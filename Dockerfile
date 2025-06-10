@@ -77,9 +77,6 @@ RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
    python /app/scripts/run_all_tests.py; \
    fi
 
-# Switch to non-root user
-USER $USERNAME
-
 # Set final working directory and environment
 WORKDIR /app
 
@@ -87,6 +84,9 @@ RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
     echo "Setting production PYTHONPATH"; \
     echo "export PYTHONPATH=/app/api/src:/app/services/src:/app/model/src" >> /etc/profile.d/pythonpath.sh; \
 fi
+
+# Switch to non-root user
+USER $USERNAME
 
 # Expose port and set startup command
 EXPOSE 8080
