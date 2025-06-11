@@ -1,5 +1,5 @@
 # Base stage - handles system dependencies and initial setup
-FROM python:3.12-slim as base
+FROM python:3.12-slim AS base
 
 ARG USERNAME=vscode
 ARG USER_UID=1000
@@ -30,7 +30,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip install --no-cache-dir --upgrade pip build pipdeptree
 
 # Application stage - builds on base and adds user + application
-FROM base as app
+FROM base AS app
 
 # Re-declare ARGs needed in this stage (ARGs don't carry over between stages)
 ARG USERNAME=vscode
