@@ -9,16 +9,16 @@
          "args": [
             "api.app:app",
             "--reload",
-            "--reload-dir", "./api",
-            "--reload-dir", "./services",
-            "--reload-dir", "./model",
+            "--reload-dir", "./server/api",
+            "--reload-dir", "./server/services",
+            "--reload-dir", "./server/model",
             "--port", "8080"
          ],
          "jinja": true,
          "justMyCode": true,
          "cwd": "${workspaceFolder}",
          "env": {
-            "PYTHONPATH": "${workspaceFolder}/api/src:${workspaceFolder}/services/src:${workspaceFolder}/model/src"
+            "PYTHONPATH": "${workspaceFolder}/server/api/src:${workspaceFolder}/server//services/src:${workspaceFolder}/server//model/src"
          }
       },
       {
@@ -40,27 +40,19 @@
          "justMyCode": true
       },
       {
-         "name": "Python: Main",
-         "type": "debugpy",
-         "request": "launch",
-         "program": "${workspaceFolder}/main.py",
-         "console": "integratedTerminal",
-         "justMyCode": true
-      },
-      {
          "name": "Pytest: All Tests",
          "type": "debugpy",
          "request": "launch",
          "module": "pytest",
          "args": [
-            "./model/tests",
-            "./services/tests",
+            "./server/model/tests",
+            "./server/services/tests",
             "-v"
          ],
          "console": "integratedTerminal",
          "cwd": "${workspaceFolder}",
          "env": {
-            "PYTHONPATH": "${workspaceFolder}/api/src:${workspaceFolder}/services/src:${workspaceFolder}/model/src"
+            "PYTHONPATH": "${workspaceFolder}/server/api/src:${workspaceFolder}/server/services/src:${workspaceFolder}/server/model/src"
          }
       },
       {
@@ -75,7 +67,7 @@
          "console": "integratedTerminal",
          "cwd": "${workspaceFolder}",
          "env": {
-            "PYTHONPATH": "${workspaceFolder}/api/src:${workspaceFolder}/services/src:${workspaceFolder}/model/src"
+            "PYTHONPATH": "${workspaceFolder}/server/api/src:${workspaceFolder}/server/services/src:${workspaceFolder}/server/model/src"
          }
       }
   ]

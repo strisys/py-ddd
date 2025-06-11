@@ -5,15 +5,16 @@ import subprocess
 from pathlib import Path
 
 workspace_folder = Path(__file__).parent.parent.absolute()
+base_folder = workspace_folder / "server"
 
 pythonpath_additions = [
-   str(workspace_folder / "model" / "src"),
-   str(workspace_folder / "services" / "src")
+   str(base_folder / "model" / "src"),
+   str(base_folder / "services" / "src")
 ]
 
 test_dirs = [
-   str(workspace_folder / "model" / "tests"),
-   str(workspace_folder / "services" / "tests")
+   str(base_folder / "model" / "tests"),
+   str(base_folder / "services" / "tests")
 ]
 
 def run_all_tests():

@@ -31,13 +31,8 @@ RUN groupadd --gid $USER_GID $USERNAME \
 RUN pip install --no-cache-dir --upgrade pip build pipdeptree
 
 # Set up and install model
-WORKDIR /app/model
-
-COPY model/requirements.txt ./requirements.txt
-COPY model/setup.py ./setup.py
-COPY model/pyproject.toml ./pyproject.toml
-COPY model/src/ ./src/
-COPY model/tests/ ./tests/
+WORKDIR /app/server/model
+COPY server/model/ ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -46,13 +41,8 @@ RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
    fi
 
 # Set up and install services
-WORKDIR /app/services
-
-COPY services/requirements.txt ./requirements.txt
-COPY services/setup.py ./setup.py
-COPY services/pyproject.toml ./pyproject.toml
-COPY services/src/ ./src/
-COPY services/tests/ ./tests/
+WORKDIR /app/server/services
+COPY server/services/ ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -61,25 +51,21 @@ RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
    fi
 
 # Set up and install api
-WORKDIR /app/api
-
-COPY api/requirements.txt ./requirements.txt
-COPY api/setup.py ./setup.py
-COPY api/pyproject.toml ./pyproject.toml
-COPY api/src/ ./src/
+WORKDIR /app/server/api
+COPY server/api/ ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy shared validation script and run validation
-COPY scripts/ /app/scripts/
+WORKDIR /app
+COPY scripts/ ./scripts
+
+ENV PYTHONPATH=/app/server/api/src:/app/server/services/src:/app/server/model/src
 
 RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
-   python /app/scripts/run_all_tests.py; \
+   python ./scripts/run_all_tests.py; \
    fi
-
-WORKDIR /app
-ENV PYTHONPATH=/app/api/src:/app/services/src:/app/model/src
-
+   
 USER $USERNAME
 
 EXPOSE 8080
