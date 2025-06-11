@@ -36,8 +36,7 @@
          ],
          "settings": {
             "python.analysis.extraPaths": [
-               "./src/model",
-               "./src"
+               "./server"
             ],
             "python.defaultInterpreterPath": "/usr/local/bin/python",
             "python.linting.enabled": false,

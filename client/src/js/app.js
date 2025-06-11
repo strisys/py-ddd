@@ -4,7 +4,6 @@ import { getApiPath } from './util';
 const getMessage = async () => {
   try {
     const endpoint = `${getApiPath('customers')}`;
-    alert(endpoint);
     const response = await axios.get(endpoint);
     return JSON.stringify(response.data);
   } catch (error) {
