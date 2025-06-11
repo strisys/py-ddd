@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
    curl \
    wget && \
    if [ "$BUILD_CONTEXT" = "local" ]; then \
-      apt-get install -y --no-install-recommends sudo; \
+   apt-get install -y --no-install-recommends sudo; \
    fi && \
    curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
    apt-get install -y nodejs && \
@@ -81,6 +81,14 @@ RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
    python ./scripts/run_all_tests.py; \
    fi
 
+WORKDIR /app/client
+COPY client/src/ ./src
+COPY client/package.json ./package.json
+COPY client/webpack.common.js ./webpack.common.js
+COPY client/webpack.config.dev.js ./webpack.config.dev.js
+COPY client/webpack.config.prod.js ./webpack.config.prod.js
+RUN npm install
+
 # Uninstall Node.js if not in local build context
 RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
    apt-get update && \
@@ -92,5 +100,6 @@ RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
 
 USER $USERNAME
 
+WORKDIR /app
 EXPOSE 8080
 CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8080"]
