@@ -16,13 +16,15 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential && \
     if [ "$BUILD_CONTEXT" = "local" ]; then \
-      apt-get install -y --no-install-recommends sudo wget curl; \
-      # curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
-      # apt-get install -y nodejs && \
-      # node --version && \
-      # npm --version; \
+      apt-get install -y --no-install-recommends sudo curl wget; \
+      curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
+      apt-get install -y nodejs && \
+      node --version && \
+      npm --version; \
     fi && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir --upgrade pip build pipdeptree
 
 # Create non-root user
 RUN groupadd --gid $USER_GID $USERNAME \
@@ -30,9 +32,6 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && mkdir -p /etc/sudoers.d \
     && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
-
-# Upgrade pip once at the beginning
-RUN pip install --no-cache-dir --upgrade pip build pipdeptree
 
 # Set up and install model
 WORKDIR /app/server/model
