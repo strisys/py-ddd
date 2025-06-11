@@ -1,4 +1,5 @@
-FROM python:3.12-slim
+# Base stage - handles system dependencies and initial setup
+FROM python:3.12-slim as base
 
 ARG USERNAME=vscode
 ARG USER_UID=1000
@@ -25,6 +26,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir --upgrade pip build pipdeptree
+
+# Application stage - builds on base and adds user + application
+FROM base as app
+
+# Re-declare ARGs needed in this stage (ARGs don't carry over between stages)
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+ARG BUILD_CONTEXT=remote
 
 # Create non-root user
 RUN groupadd --gid $USER_GID $USERNAME \
