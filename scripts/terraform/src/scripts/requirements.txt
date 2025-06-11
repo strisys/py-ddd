@@ -1,0 +1,38 @@
+# Core
+debugpy
+
+# Azure Identity
+azure-identity==1.23.0
+
+# Azure 
+azure-storage-blob==12.25.1
+
+# Azure AI
+azure-ai-projects==1.0.0b11
+azure-ai-inference==1.0.0b9
+azure-ai-textanalytics==5.3.0
+azure-ai-agents @ git+https://github.com/Azure/azure-sdk-for-python.git@ccb0e03a3de748f3aabf44be94776ba37e55791f#subdirectory=sdk/ai/azure-ai-agents
+azure-ai-projects[telemetry]
+
+# Azure AI related
+openai==1.82.1
+prompty
+opentelemetry-sdk==1.33.1
+opentelemetry-instrumentation-openai-v2
+opentelemetry-instrumentation-langchain
+
+# Azure AI dependencies
+aiohttp
+
+# Core dependencies
+pendulum
+
+
+# Configuration
+python-dotenv
+
+# Data Validation
+pydantic
+
+# Other
+tabulate

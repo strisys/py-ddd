@@ -14,6 +14,12 @@
     "**/**/__init__.py": false,
     "**/**/node_modules": true,
     "**/**/dist": true,
+    "**/.terraform": true,
+    "**/*.tfstate": true,
+    "**/*.lock.hcl": false,
+    "**/*.tfstate.backup": true,
+    "**/*.github": true,
+    "**/*.getattributes": true
   },
   "editor.tabSize": 3,
   "editor.insertSpaces": true,

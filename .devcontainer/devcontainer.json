@@ -12,7 +12,8 @@
       "ghcr.io/devcontainers/features/git:latest": {},
       "ghcr.io/devcontainers/features/docker-in-docker:latest": {},
       "ghcr.io/devcontainers/features/powershell:latest": {},
-      "ghcr.io/devcontainers/features/azure-cli:latest": {}
+      "ghcr.io/devcontainers/features/azure-cli:latest": {},
+      "ghcr.io/devcontainers/features/terraform:1.4.0": {}
    },
    "customizations": {
       "vscode": {
@@ -27,12 +28,14 @@
             "streetsidesoftware.code-spell-checker",
             "eamodio.gitlens",
             "ms-vscode.powershell",
+            "ms-vscode.azurecli",
             "gruntfuggly.todo-tree",
             "visualstudioexptteam.vscodeintellicode",
             "github.copilot",
             "ryanluker.vscode-coverage-gutters",
             "mhutchie.git-graph",
-            "ms-toolsai.prompty"
+            "ms-toolsai.prompty",
+            "hashicorp.terraform"
          ],
          "settings": {
             "python.analysis.extraPaths": [

@@ -98,6 +98,7 @@ RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
    rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/nodesource.list; \
    fi
 
+RUN chown -R $USERNAME:$USERNAME /app
 USER $USERNAME
 
 WORKDIR /app
