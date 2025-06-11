@@ -6,11 +6,9 @@ param(
     [string]$Url
 )
 
-$scope = "api://$ClientId/.default"
-
 az login
 
-# Fetch token using Azure CLI
+$scope = "api://$ClientId/.default"
 $token = az account get-access-token --scope $scope --query accessToken -o tsv
 Write-Host $token
 
@@ -23,4 +21,4 @@ Write-Host "Invoking ${Url}"
 $response = Invoke-RestMethod -Uri $Url -Method GET -Headers $headers
 
 Write-Host "API Response:"
-$response | ConvertTo-Json -Depth 5
+$response | ConvertTo-Json -Depth 7
