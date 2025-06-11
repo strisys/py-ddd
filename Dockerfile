@@ -17,10 +17,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential && \
     if [ "$BUILD_CONTEXT" = "local" ]; then \
       apt-get install -y --no-install-recommends sudo wget curl; \
-      curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
-      apt-get install -y nodejs && \
-      node --version && \
-      npm --version; \
+      # curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
+      # apt-get install -y nodejs && \
+      # node --version && \
+      # npm --version; \
     fi && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
