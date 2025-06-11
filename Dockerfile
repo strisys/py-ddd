@@ -1,31 +1,35 @@
 FROM python:3.12-slim
 
+ARG USERNAME=vscode
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+ARG BUILD_CONTEXT=remote
+
 ENV PYTHONDONTWRITEBYTECODE=1 \
    PYTHONUNBUFFERED=1 \
    PYTHONIOENCODING=utf-8 \
    LANG=C.UTF-8 \
    LC_ALL=C.UTF-8 \
-   DEBIAN_FRONTEND=noninteractive
+   DEBIAN_FRONTEND=noninteractive \
+   BUILD_CONTEXT=${BUILD_CONTEXT}
 
-# Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-   wget \
-   curl \
-   build-essential \
-   sudo \
-   && apt-get clean && rm -rf /var/lib/apt/lists/*
+    build-essential && \
+    if [ "$BUILD_CONTEXT" = "local" ]; then \
+      apt-get install -y --no-install-recommends sudo wget curl; \
+      curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
+      apt-get install -y nodejs && \
+      node --version && \
+      npm --version; \
+    fi && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create non-root user
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
-ARG BUILD_CONTEXT=remote
-ENV BUILD_CONTEXT=${BUILD_CONTEXT}
-
 RUN groupadd --gid $USER_GID $USERNAME \
-   && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
-   && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
-   && chmod 0440 /etc/sudoers.d/$USERNAME
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && mkdir -p /etc/sudoers.d \
+    && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
 
 # Upgrade pip once at the beginning
 RUN pip install --no-cache-dir --upgrade pip build pipdeptree
@@ -65,7 +69,7 @@ ENV PYTHONPATH=/app/server/api/src:/app/server/services/src:/app/server/model/sr
 RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
    python ./scripts/run_all_tests.py; \
    fi
-   
+
 USER $USERNAME
 
 EXPOSE 8080
