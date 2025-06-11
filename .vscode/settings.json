@@ -9,7 +9,7 @@
     "**/*.egg-info/": true,
     "**/.devcontainer": false,
     "**/Dockerfile": false,
-    "**/requirements.txt": true,
+    "**/requirements.txt": false,
     "**/.vscode/launch.json": false,
     "**/**/__init__.py": true,
   },
