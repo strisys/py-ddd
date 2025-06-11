@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .router import configure_routes
 from .debug_app import print_paths
+from .identity_util import configure_pipeline as configure_auth
 
 print_paths()
 
@@ -10,7 +11,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
-# from src.identity_util import configure_pipeline
 from dotenv import load_dotenv
 import logging
 
@@ -44,6 +44,7 @@ async def serve_favicon():
 async def serve_robots():
     return FileResponse(PUBLIC_DIR / "robots.txt")
 
+configure_auth(app)
 configure_routes(app)
 
 @app.get("/api/hello")
