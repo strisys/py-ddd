@@ -13,11 +13,14 @@ $acrLoginServer = "$RegistryName.azurecr.io"
 $fullImageName = "$acrLoginServer/$RepoName"
 
 try {
+    Write-Host "Logging in to Azure ..." -ForegroundColor Yellow
+    az login
+
     Write-Host "Logging in to ACR..." -ForegroundColor Yellow
     az acr login --name $RegistryName
 
     Write-Host "Building Docker image '$fullImageName'..." -ForegroundColor Yellow
-    docker build -t $fullImageName .
+    docker build --no-cache -t $fullImageName .
 
     Write-Host "Pushing Docker image to ACR..." -ForegroundColor Yellow
     docker push $fullImageName
