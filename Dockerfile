@@ -15,15 +15,17 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
    BUILD_CONTEXT=${BUILD_CONTEXT}
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential && \
-    if [ "$BUILD_CONTEXT" = "local" ]; then \
-      apt-get install -y --no-install-recommends sudo curl wget; \
-      curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
-      apt-get install -y nodejs && \
-      node --version && \
-      npm --version; \
-    fi && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+   build-essential \
+   curl \
+   wget && \
+   if [ "$BUILD_CONTEXT" = "local" ]; then \
+      apt-get install -y --no-install-recommends sudo; \
+   fi && \
+   curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
+   apt-get install -y nodejs && \
+   node --version && \
+   npm --version && \
+   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir --upgrade pip build pipdeptree
 
@@ -38,10 +40,10 @@ ARG BUILD_CONTEXT=remote
 
 # Create non-root user
 RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
-    && mkdir -p /etc/sudoers.d \
-    && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
-    && chmod 0440 /etc/sudoers.d/$USERNAME
+   && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+   && mkdir -p /etc/sudoers.d \
+   && echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
+   && chmod 0440 /etc/sudoers.d/$USERNAME
 
 # Set up and install model
 WORKDIR /app/server/model
@@ -77,6 +79,15 @@ ENV PYTHONPATH=/app/server/api/src:/app/server/services/src:/app/server/model/sr
 
 RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
    python ./scripts/run_all_tests.py; \
+   fi
+
+# Uninstall Node.js if not in local build context
+RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
+   apt-get update && \
+   apt-get remove -y nodejs && \
+   apt-get autoremove -y && \
+   apt-get clean && \
+   rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/nodesource.list; \
    fi
 
 USER $USERNAME
