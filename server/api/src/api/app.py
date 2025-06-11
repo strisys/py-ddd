@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .router import configure_routes
 from .debug_app import print_paths
-# from .pipeline.configuration import configure as configure_pipeline
 
 print_paths()
 
@@ -22,12 +21,15 @@ logger = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent
 PUBLIC_DIR = BASE_DIR / "public"
-SKIP_ROUTES = ("api/")
+SKIP_ROUTES = ("api/",)
 
-app = FastAPI(title="Web App", version="1.0.0")
-
-configure_routes(app)
+app = FastAPI(redirect_slashes=True)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+
+
+# Static file serving
+app.mount("/js", StaticFiles(directory=PUBLIC_DIR / "js"), name="js")
+app.mount("/css", StaticFiles(directory=PUBLIC_DIR / "css"), name="css")
 app.mount("/public", StaticFiles(directory=PUBLIC_DIR), name="public")
 
 @app.get("/site.webmanifest")
@@ -41,6 +43,8 @@ async def serve_favicon():
 @app.get("/robots.txt")
 async def serve_robots():
     return FileResponse(PUBLIC_DIR / "robots.txt")
+
+configure_routes(app)
 
 @app.get("/api/hello")
 async def get():

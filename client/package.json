@@ -14,7 +14,7 @@
       "postinstall": "npm-run-all build",
       "clean:public": "rimraf \"../server/api/src/api/public*\" \"!../server/api/src/api/public.gitkeep\"",
       "copy:public": "copyfiles -u 1 \"dist/**/*\" \"../server/api/src/api/public\"",
-      "bundle": "webpack --config webpack.config.prod.js",
+      "bundle": "webpack --config webpack.config.dev.js",
       "build": "npm-run-all clean:public bundle copy:public",
       "server": "cross-env-shell \"cd ../server/api/src/api && python -m uvicorn api.app:app --reload --port 8080\"",
       "start": "webpack serve --open --config webpack.config.dev.js",
