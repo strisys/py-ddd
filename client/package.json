@@ -12,8 +12,8 @@
    "author": "",
    "scripts": {
       "postinstall": "npm-run-all build",
-      "clean:public": "rimraf \"../api/src/public/*\" \"!../api/src/public/.gitkeep\"",
-      "copy:public": "copyfiles -u 1 \"dist/**/*\" \"../api/src/public\"",
+      "clean:public": "rimraf \"../server/api/src/api/public*\" \"!../server/api/src/api/public.gitkeep\"",
+      "copy:public": "copyfiles -u 1 \"dist/**/*\" \"../server/api/src/api/public\"",
       "bundle": "webpack --config webpack.config.prod.js",
       "build": "npm-run-all clean:public bundle copy:public",
       "server": "cross-env-shell \"cd ../api && python -m uvicorn api.app:app --reload --port 8080\"",

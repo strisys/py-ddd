@@ -1,5 +1,6 @@
 # Project specific
 tickets.db
+server/api/src/api/public/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
