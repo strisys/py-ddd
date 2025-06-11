@@ -1,0 +1,16 @@
+# Core
+build
+pytest
+pytest-asyncio
+python-dotenv
+setuptools
+tabulate
+
+# Data
+openpyxl
+pydantic
+pandas
+
+# Project-specific
+-e ../model
+# ../model/dist/model-0.1.0-py3-none-any.whl
