@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "rg_ai_research" {
-  provider = azurerm.azure-research
+  provider = azurerm.azure-default
 
   name     = var.resource_group_name
   location = var.location
@@ -9,8 +9,3 @@ resource "azurerm_resource_group" "rg_ai_research" {
     project     = var.project_tag
   }
 }
-
-# module "other-onpremises-simulation" {
-#   source = "./sql"
-#   config = var.config
-# }

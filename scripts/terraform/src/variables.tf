@@ -40,6 +40,38 @@ variable "project_tag" {
   default     = "ai-foundry"
 }
 
+variable "azure_client_id" {
+  description = ""
+  type        = string
+}
+
+variable "azure_tenant_id" {
+  description = ""
+  type        = string
+}
+
+variable "azure_client_id" {
+  description = ""
+  type        = string
+}
+
+variable "azure_client_secret" {
+  description = ""
+  type        = string
+}
+
+variable "azure_redirect_uri" {
+  description = ""
+  type        = string
+}
+
+variable "azure_key_vault_name" {
+  description = ""
+  type        = string
+}
+
+
+
 locals {
   # Example: EST (UTC-5)
   current_date_est = formatdate("YYYYMMDD", timeadd(timestamp(), "-5h"))
