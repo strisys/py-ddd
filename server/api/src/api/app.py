@@ -11,7 +11,7 @@ import logging
 
 from .router import configure_routes
 from .debug_app import print_paths
-from .identity_util import try_configure_pipeline as try_configure_auth
+from .identity_util import is_auth_enabled, try_configure_pipeline as try_configure_auth
 
 print_paths()
 load_dotenv()
@@ -47,7 +47,9 @@ async def serve_robots():
 async def get():
     return JSONResponse({"message": "Hello World", "timestamp": (datetime.now(timezone.utc).isoformat())})
 
-try_configure_auth(app)
+if (is_auth_enabled):
+   try_configure_auth(app)
+   
 configure_routes(app)
 
 @app.get("/api/protected")
