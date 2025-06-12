@@ -1,11 +1,6 @@
+from datetime import datetime, timezone
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .router import configure_routes
-from .debug_app import print_paths
-from .identity_util import configure_pipeline as configure_auth
-
-print_paths()
-
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
@@ -14,6 +9,11 @@ from pathlib import Path
 from dotenv import load_dotenv
 import logging
 
+from .router import configure_routes
+from .debug_app import print_paths
+from .identity_util import try_configure_pipeline as try_configure_auth
+
+print_paths()
 load_dotenv()
 
 logging.basicConfig(level=logging.DEBUG)
@@ -25,7 +25,6 @@ SKIP_ROUTES = ("api/",)
 
 app = FastAPI(redirect_slashes=True)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
-
 
 # Static file serving
 app.mount("/js", StaticFiles(directory=PUBLIC_DIR / "js"), name="js")
@@ -43,13 +42,13 @@ async def serve_favicon():
 @app.get("/robots.txt")
 async def serve_robots():
     return FileResponse(PUBLIC_DIR / "robots.txt")
-
-configure_auth(app)
-configure_routes(app)
-
-@app.get("/api/hello")
+  
+@app.get("/api/heartbeat")
 async def get():
-    return JSONResponse({"message": "Hello World"})
+    return JSONResponse({"message": "Hello World", "timestamp": (datetime.now(timezone.utc).isoformat())})
+
+try_configure_auth(app)
+configure_routes(app)
 
 @app.get("/api/protected")
 async def protected_route(request: Request):

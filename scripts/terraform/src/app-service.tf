@@ -107,6 +107,7 @@ resource "azurerm_linux_web_app" "web_app" {
     AZURE_KEY_VAULT_NAME = var.azure_key_vault_name
     IS_CLOUD_ENVIRONMENT = true
     MSAL_DEBUGGING       = false
+    IS_AUTH_ENABLED      = true
   }
 
   https_only                    = true

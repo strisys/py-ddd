@@ -4,7 +4,8 @@
       "dockerfile": "../Dockerfile",
       "context": "..",
       "args": {
-         "BUILD_CONTEXT": "local"
+         "BUILD_CONTEXT": "local",
+         "IS_AUTH_ENABLED": "false"
       }
    },
    "features": {

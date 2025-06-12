@@ -36,12 +36,29 @@ logging.getLogger('msal').setLevel(logging.DEBUG if msal_debugging else logging.
 secret_mapping={"AZURE-CLIENT-ID": AZURE_CLIENT_ID, "AZURE-CLIENT-SECRET": AZURE_CLIENT_SECRET, "AZURE-TENANT-ID": AZURE_TENANT_ID}
 # KeyVaultUtility().load_secrets_to_env(secret_mapping=secret_mapping)
 
-# assert os.environ.get(AZURE_CLIENT_ID), f"{AZURE_CLIENT_ID} not found in environment variables"
-# assert os.environ.get(AZURE_CLIENT_SECRET), f"{AZURE_CLIENT_SECRET} not found in environment variables"
-# assert os.environ.get(AZURE_TENANT_ID), f"{AZURE_TENANT_ID} not found in environment variables"
-
 SESSION_COOKIE_NAME = 'quickstart-fastapi-session-auth'
 router = APIRouter()
+
+def is_auth_enabled() -> bool:
+    is_auth_enabled = os.environ.get("IS_AUTH_ENABLED", None)
+
+    if (is_auth_enabled is None):
+        raise ValueError("Failed to configure authentication pipeline.  The 'IS_AUTH_ENABLED' environment variable was not set.")
+
+    is_auth_enabled = str(is_auth_enabled).lower() in ("true", "1", "yes",)
+
+    if (is_auth_enabled == False):
+        logger.warning("Auth pipeline configuration skipped because the 'IS_AUTH_ENABLED' environment variable is false.")
+    
+    return is_auth_enabled
+
+def is_cloud_environment() -> bool:
+    val = os.getenv("IS_CLOUD_ENVIRONMENT", None)
+
+    if (val is None):
+        raise ValueError("IS_CLOUD_ENVIRONMENT not set in environment variables")
+    
+    return str(is_auth_enabled).lower() in ("true", "1", "yes",)
 
 class InMemorySessionStore:
     def __init__(self):
@@ -135,7 +152,8 @@ class IdentityManager:
     def get_user(self, request: Request):
         return self.get_inner(request).get_user()
 
-identity_manager = IdentityManager()
+if (is_auth_enabled()):
+   identity_manager = IdentityManager()
 
 def validate_bearer_token(token: str) -> Optional[dict]:
     try:
@@ -191,13 +209,10 @@ async def authenticate(request: Request, call_next):
     request.state.auth_user = user
     return await call_next(request)
 
-def is_cloud_environment() -> bool:
-    val = os.getenv("IS_CLOUD_ENVIRONMENT", '')
-    if not val:
-        raise ValueError("IS_CLOUD_ENVIRONMENT not set in environment variables")
-    return val.lower() == "true"
+def try_configure_pipeline(app: FastAPI) -> FastAPI:
+    if (is_auth_enabled() == False):
+        return app
 
-def configure_pipeline(app: FastAPI) -> FastAPI:
     app.add_middleware(BaseHTTPMiddleware, dispatch=authenticate)
     app.add_middleware(AuthSessionMiddleware)
     app.include_router(router)

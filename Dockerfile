@@ -5,6 +5,7 @@ ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 ARG BUILD_CONTEXT=remote
+ARG IS_AUTH_ENABLED=true
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
    PYTHONUNBUFFERED=1 \
@@ -12,7 +13,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
    LANG=C.UTF-8 \
    LC_ALL=C.UTF-8 \
    DEBIAN_FRONTEND=noninteractive \
-   BUILD_CONTEXT=${BUILD_CONTEXT}
+   BUILD_CONTEXT=${BUILD_CONTEXT} \
+   IS_AUTH_ENABLED=${IS_AUTH_ENABLED}
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
    build-essential \
@@ -37,6 +39,7 @@ ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 ARG BUILD_CONTEXT=remote
+ARG IS_AUTH_ENABLED=true
 
 # Create non-root user
 RUN groupadd --gid $USER_GID $USERNAME \
@@ -98,7 +101,6 @@ RUN if [ "$BUILD_CONTEXT" != "local" ]; then \
    rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/nodesource.list; \
    fi
 
-RUN chown -R $USERNAME:$USERNAME /app
 USER $USERNAME
 
 WORKDIR /app
