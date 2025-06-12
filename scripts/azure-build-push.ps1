@@ -20,7 +20,7 @@ try {
     az acr login --name $RegistryName
 
     Write-Host "Building Docker image '$fullImageName'..." -ForegroundColor Yellow
-    docker build --build-arg IS_AUTH_ENABLED=true --no-cache -t $fullImageName .
+    docker build --build-arg IS_AUTH_ENABLED=false --no-cache -t $fullImageName .
 
     Write-Host "Pushing Docker image to ACR..." -ForegroundColor Yellow
     docker push $fullImageName
