@@ -6,5 +6,6 @@ class CustomerDataAccessService:
    async def get(self) -> list[Customer]:
       return [
          Customer("Elon Musk", "elon.musk@x.com"),
-         Customer("Bill Gates", "billgates@microsoft.com")
+         Customer("Bill Gates", "billgates@microsoft.com"),
+         Customer("Pichai Sundararajan", "psundararajan@goolge.com")
       ]
