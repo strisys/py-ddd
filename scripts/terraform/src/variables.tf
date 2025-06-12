@@ -45,17 +45,12 @@ variable "azure_client_id" {
   type        = string
 }
 
-variable "azure_tenant_id" {
-  description = ""
-  type        = string
-}
-
-variable "azure_client_id" {
-  description = ""
-  type        = string
-}
-
 variable "azure_client_secret" {
+  description = ""
+  type        = string
+}
+
+variable "azure_tenant_id" {
   description = ""
   type        = string
 }
@@ -69,7 +64,6 @@ variable "azure_key_vault_name" {
   description = ""
   type        = string
 }
-
 
 
 locals {

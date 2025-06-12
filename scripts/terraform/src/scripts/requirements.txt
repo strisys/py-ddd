@@ -27,7 +27,6 @@ aiohttp
 # Core dependencies
 pendulum
 
-
 # Configuration
 python-dotenv
 

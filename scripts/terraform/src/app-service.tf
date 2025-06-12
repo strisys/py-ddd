@@ -103,7 +103,7 @@ resource "azurerm_linux_web_app" "web_app" {
     AZURE_CLIENT_ID      = var.azure_client_id
     AZURE_CLIENT_SECRET  = var.azure_client_secret
     AZURE_TENANT_ID      = var.azure_tenant_id
-    AZURE_REDIRECT_URI   = var.azure_redirect_uri
+    AZURE_REDIRECT_URI   = "https://ai-research-app.azurewebsites.net/signin"
     AZURE_KEY_VAULT_NAME = var.azure_key_vault_name
     IS_CLOUD_ENVIRONMENT = true
     MSAL_DEBUGGING       = false
